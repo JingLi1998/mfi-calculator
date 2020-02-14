@@ -6,7 +6,7 @@
     <v-content>
       <v-container style="height: 100%" fluid>
         <v-row style="height: 100%" class="d-flex flex-column justify-center">
-          <v-col style="min-height:75%" sm="8" offset-sm="2" class="pa-0">
+          <v-col style="min-height:90%" sm="8" offset-sm="2" class="pa-0">
             <v-card
               style="border-radius:30px"
               raised

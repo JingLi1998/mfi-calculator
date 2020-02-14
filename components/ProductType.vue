@@ -1,11 +1,12 @@
 <template>
   <v-form>
     <p
-      class="headline"
+      class="display-regular"
     >Please describe the features of the loan. Later we will ask for further information on each feature you have selected</p>
     <v-row justify="center">
       <v-col cols="11">
         <v-select
+          dense
           v-for="item in items"
           :items="item.options"
           :label="item.text"
@@ -13,6 +14,12 @@
           :key="item.id"
           required
         ></v-select>
+        <v-btn
+          text
+          class="display-regular-1"
+          @click="$emit('next')"
+          color="primary"
+        >Click here to continue</v-btn>
       </v-col>
     </v-row>
   </v-form>
