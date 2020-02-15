@@ -57,6 +57,11 @@ export default {
       ],
       counter: 0
     };
+  },
+  computed: {
+    title() {
+      return this.$store.state.formSteps;
+    }
   }
 };
 </script>
