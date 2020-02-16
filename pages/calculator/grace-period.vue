@@ -26,6 +26,10 @@
 
 <script>
 export default {
-  items: ["Yes", "No"]
+  data() {
+    return {
+      items: ["Yes", "No"]
+    };
+  }
 };
 </script>

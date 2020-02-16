@@ -1,3 +1,3 @@
 <template>
-  <div class="headline">Payment Schedule</div>
+  <div class="headline">Irregular Payment Schedule</div>
 </template>
