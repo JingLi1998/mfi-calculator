@@ -54,6 +54,9 @@ export const mutations = {
   },
   incrementCounter(state) {
     state.counter += 1;
+  },
+  decrementCounter(state) {
+    state.counter -= 1;
   }
 };
 export const actions = {
@@ -62,5 +65,8 @@ export const actions = {
   },
   incrementCounter(context) {
     context.commit("incrementCounter");
+  },
+  decrementCounter(context) {
+    context.commit("decrementCounter");
   }
 };

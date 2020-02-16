@@ -21,9 +21,7 @@
                   ></v-img>
                 </v-col>
                 <v-col sm="8" class style="border-radius:0 30px 30px 0">
-                  <v-scroll-x-reverse-transition mode="out-in">
-                    <nuxt />
-                  </v-scroll-x-reverse-transition>
+                  <nuxt />
                 </v-col>
               </v-row>
             </v-card>
