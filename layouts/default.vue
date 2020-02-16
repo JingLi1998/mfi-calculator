@@ -1,8 +1,5 @@
 <template>
   <v-app style="background-color: #8EE144">
-    <!-- <v-app-bar fixed app>
-      <v-toolbar-title v-text="title" />
-    </v-app-bar>-->
     <v-content>
       <v-container style="height: 100%" fluid>
         <v-row style="height: 100%" class="d-flex flex-column justify-center">
@@ -24,7 +21,9 @@
                   ></v-img>
                 </v-col>
                 <v-col sm="8" class style="border-radius:0 30px 30px 0">
-                  <nuxt />
+                  <v-scroll-x-reverse-transition mode="out-in">
+                    <nuxt />
+                  </v-scroll-x-reverse-transition>
                 </v-col>
               </v-row>
             </v-card>

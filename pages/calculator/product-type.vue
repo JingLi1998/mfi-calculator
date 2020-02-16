@@ -13,13 +13,7 @@
           :rules="[v => !!v || 'Item is required']"
           :key="item.id"
           required
-        ></v-select>
-        <v-btn
-          text
-          class="display-regular-1"
-          @click="$emit('next')"
-          color="primary"
-        >Click here to continue</v-btn>
+        />
       </v-col>
     </v-row>
   </v-form>
