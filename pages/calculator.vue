@@ -30,7 +30,7 @@ export default {
     ...mapGetters(["formSteps", "counter"])
   },
   methods: {
-    ...mapActions(["incrementCounter", "decrementCounter"]),
+    ...mapActions(["setCounter", "incrementCounter", "decrementCounter"]),
     nextPage() {
       this.incrementCounter();
       this.$router.push(this.formSteps[this.counter].to);
@@ -39,6 +39,12 @@ export default {
       this.decrementCounter();
       this.$router.push(this.formSteps[this.counter].to);
     }
+  },
+  mounted() {
+    const currentIndex = this.formSteps
+      .map(e => e.to)
+      .indexOf(this.$route.path);
+    this.setCounter(currentIndex);
   }
 };
 </script>

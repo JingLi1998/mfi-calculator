@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="headline">Variable Interest Rate</div>
+    <div class="headline text-center">Variable Interest Rate</div>
+
     <v-data-table
-      hide-actions="true"
       disable-filtering
       disable-pagination
       disable-sort
@@ -10,34 +10,71 @@
       :headers="headers"
       :items="interestRates"
     >
-      <!-- <template v-slot:item.start="props">
-        <v-edit-dialog
-          :return-value.sync="props.item.start"
-          @save="save"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          {{ props.item.start }}
-          <template v-slot:input>
-            <v-text-field
-              v-model="props.item.start"
-              :rules="[max25chars]"
-              label="Edit"
-              single-line
-              counter
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>-->
+      <template v-slot:item.action="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+
+      <template v-slot:top>
+        <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
+        <v-spacer />
+      </template>
+
+      <template v-slot:no-data>
+        <div>No items</div>
+      </template>
     </v-data-table>
+
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{ formTitle }}</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.start" label="Start of Period"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.interest" label="Interest Rate"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field v-model="editedItem.expressed" label="Expressed"></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
+
 
 <script>
 export default {
   data() {
     return {
+      dialog: false,
+      editedIndex: -1,
+      editedItem: {
+        start: "",
+        interest: "",
+        expressed: ""
+      },
+      defaultItem: {
+        start: "",
+        interest: "",
+        expressed: ""
+      },
+
       snack: false,
       snackColor: "",
       snackText: "",
@@ -58,35 +95,53 @@ export default {
           text: "Expressed",
           align: "left",
           value: "expressed"
+        },
+        {
+          text: "Actions",
+          value: "action"
         }
       ],
-      interestRates: [
-        {
-          start: "",
-          interest: "",
-          expressed: ""
-        }
-      ]
+      interestRates: []
     };
   },
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Rate" : "Edit Rate";
+    }
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    }
+  },
   methods: {
-    save() {
-      this.snack = true;
-      this.snackColor = "success";
-      this.snackText = "Data saved";
+    editItem(item) {
+      this.editedIndex = this.interestRates.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
-    cancel() {
-      this.snack = true;
-      this.snackColor = "error";
-      this.snackText = "Canceled";
+
+    deleteItem(item) {
+      const index = this.interestRates.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.interestRates.splice(index, 1);
     },
-    open() {
-      this.snack = true;
-      this.snackColor = "info";
-      this.snackText = "Dialog opened";
-    },
+
     close() {
-      console.log("Dialog closed");
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.interestRates[this.editedIndex], this.editedItem);
+      } else {
+        this.interestRates.push(this.editedItem);
+      }
+      this.close();
     }
   }
 };

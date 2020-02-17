@@ -48,9 +48,13 @@ export const getters = {
     return state.counter;
   }
 };
+
 export const mutations = {
   setFormSteps(state, payload) {
     state.formSteps = payload;
+  },
+  setCounter(state, payload) {
+    state.counter = payload;
   },
   incrementCounter(state) {
     state.counter += 1;
@@ -59,9 +63,13 @@ export const mutations = {
     state.counter -= 1;
   }
 };
+
 export const actions = {
   setFormSteps(context, payload) {
     context.commit("setFormSteps", payload);
+  },
+  setCounter(context, payload) {
+    context.commit("setCounter", payload);
   },
   incrementCounter(context) {
     context.commit("incrementCounter");

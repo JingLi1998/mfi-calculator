@@ -5,13 +5,19 @@
       disable-filtering
       disable-pagination
       disable-sort
-      hide-actions
       hide-default-footer
       :headers="headers"
       :items="fees"
     >
-      <template v-slot:item.name="props">
-        <v-edit-dialog
+      <template v-slot:top>
+        <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
+      </template>
+      <template v-slot:item.action="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+      <!-- <template v-slot:item.name="props"> -->
+      <!-- <v-edit-dialog
           :return-value.sync="props.item.name"
           @save="save"
           @cancel="cancel"
@@ -26,10 +32,10 @@
               label="Edit"
               single-line
               counter
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
-      </template>
+      ></v-text-field>-->
+      <!-- </template> -->
+      <!-- // </v-edit-dialog> -->
+      <!-- </template> -->
     </v-data-table>
   </div>
 </template>
@@ -83,7 +89,8 @@ export default {
           text: "Custom Input Month",
           align: "left",
           value: "custom"
-        }
+        },
+        { text: "Actions", value: "action" }
       ],
       fees: [
         {
