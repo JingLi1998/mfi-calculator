@@ -9,8 +9,8 @@
       >
         <div class="headline text-center">Variable Interest Rate</div>
         <div
-          class="display-regular text-center pt-3"
-        >The Start of period (month) should be the first month from the start of the loan in which the interest rate is charged. For example, if one interest rate is charged for the first year, and another interest rate is charged for the second year, A59 should be 1, and A60 should be 13.</div>
+          class="display-regular text-center py-3"
+        >The Start of period (month) should be the first month from the start of the loan in which the interest rate is charged. For example, if one interest rate is charged for the first year, and another interest rate is charged for the second year, the first start of period in the first row will be 1, and the second row should be 13.</div>
 
         <v-data-table
           style="background-color:#F5F9E9"
@@ -26,7 +26,7 @@
             <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
           </template>
 
-          <template v-slot:top>
+          <template v-slot:footer>
             <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
             <v-spacer />
           </template>
@@ -37,7 +37,7 @@
         </v-data-table>
 
         <v-dialog v-model="dialog" max-width="500px">
-          <v-card>
+          <v-card style="background-color:#F5F9E9">
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -52,7 +52,7 @@
                     <v-text-field v-model="editedItem.interest" label="Interest Rate"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.expressed" label="Expressed"></v-text-field>
+                    <v-select v-model="editedItem.expressed" label="Expressed" :items="items"></v-select>
                   </v-col>
                 </v-row>
               </v-container>
@@ -60,8 +60,8 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+              <v-btn color="primary" text @click="close">Cancel</v-btn>
+              <v-btn color="primary" text @click="save">Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -80,6 +80,10 @@ export default {
   },
   data() {
     return {
+      items: [
+        { text: "yearly", value: "yearly" },
+        { text: "monthly", value: "monthly" }
+      ],
       dialog: false,
       editedIndex: -1,
       editedItem: {

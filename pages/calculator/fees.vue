@@ -8,11 +8,10 @@
         class="pa-10"
       >
         <div class="headline">Fees</div>
-        <div class="display-regular text-center pt-3">
+        <div class="display-regular text-center py-3">
           Add one fee for each fee category. For example, a recurring fee
           charged annually is one fee category. You can enter up to ten fee
-          categories below. If there are fewer than ten fees, just enter the
-          first few and leave the rest blank.
+          categories below.
         </div>
         <v-data-table
           style="background-color:#F5F9E9"
@@ -23,25 +22,21 @@
           :headers="headers"
           :items="fees"
         >
-          <template v-slot:top>
-            <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
+          <template v-slot:footer>
+            <v-btn color="primary" text @click="dialog = !dialog">Add New Fee</v-btn>
           </template>
           <template v-slot:item.action="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
             <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
           </template>
-          <template v-slot:top>
-            <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
-            <v-spacer />
-          </template>
 
           <template v-slot:no-data>
-            <div>No items</div>
+            <div>No Fees</div>
           </template>
         </v-data-table>
 
-        <v-dialog v-model="dialog" max-width="500px">
-          <v-card>
+        <v-dialog v-model="dialog" max-width="60%">
+          <v-card style="background-color:#F5F9E9">
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -50,32 +45,51 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Start of Period"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Fee Name" />
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.type" label="Interest Rate"></v-text-field>
+                    <v-select
+                      v-model="editedItem.type"
+                      :items="feeItems"
+                      label="Fee Type"
+                      :rules="[v => !!v || 'Item is required']"
+                      required
+                    />
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.fixed" label="Expressed"></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.percentage" label="Start of Period"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.onceOrRepeat" label="Interest Rate"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.repeats" label="Expressed"></v-text-field>
+                    <v-text-field v-model="editedItem.fixed" label="Fixed Amount" suffix="MMK" />
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.finish" label="Start of Period"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.percentage"
+                      label="Percentage Amount"
+                      suffix="%"
+                    />
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.custom" label="Interest Rate"></v-text-field>
+                    <v-select
+                      v-model="editedItem.onceOrRepeat"
+                      :items="oneOffRepeatItems"
+                      label="One-off or Repeat"
+                      :rules="[v => !!v || 'Item is required']"
+                      required
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.start" label="Starting From" />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.repeats" label="Repeats every" />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.finish" label="Finishing date" />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.custom" label="Custom Input Month" />
                   </v-col>
                 </v-row>
               </v-container>
@@ -83,8 +97,8 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+              <v-btn color="primary" text @click="close">Cancel</v-btn>
+              <v-btn color="primary" text @click="save">Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -102,12 +116,26 @@ export default {
   },
   data() {
     return {
+      feeItems: [
+        { text: "Fixed", value: "fixed" },
+        { text: "Percentage of Loan Size", value: "percentage" }
+      ],
+      oneOffRepeatItems: [
+        { text: "One-off", value: "one-off" },
+        { text: "Repeated", value: "repeated" }
+      ],
       dialog: false,
       editedIndex: -1,
       editedItem: {
+        name: "",
+        type: "",
+        fixed: "",
+        percentage: "",
+        onceOrRepeat: "",
         start: "",
-        interest: "",
-        expressed: ""
+        repeats: "",
+        finish: "",
+        custom: ""
       },
       defaultItem: {
         start: "",
@@ -142,6 +170,11 @@ export default {
           value: "onceOrRepeat"
         },
         {
+          text: "Starting from?",
+          align: "left",
+          value: "start"
+        },
+        {
           text: "Repeats Every",
           align: "left",
           value: "repeats"
@@ -163,7 +196,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Rate" : "Edit Rate";
+      return this.editedIndex === -1 ? "New Fee Category" : "Edit Fee Category";
     }
   },
   watch: {
@@ -194,9 +227,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.interestRates[this.editedIndex], this.editedItem);
+        Object.assign(this.fees[this.editedIndex], this.editedItem);
       } else {
-        this.interestRates.push(this.editedItem);
+        this.fees.push(this.editedItem);
       }
       this.close();
     }
