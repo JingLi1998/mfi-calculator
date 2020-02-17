@@ -11,7 +11,7 @@
         <div
           class="display-regular text-center pt-3"
         >Please provide some basic information concerning the payment schedule of the loan</div>
-        <v-row align="center px-2">
+        <v-row align="center" class="px-2">
           <v-col cols="6" class="py-0">
             <v-text-field label="Interest rate percentage" type="number" step="0.01" suffix="%" />
           </v-col>
@@ -24,7 +24,7 @@
             />
           </v-col>
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-select
             label="Interest Payment Type"
             :items="interestTypeItems"
@@ -40,7 +40,7 @@
             <span>Flat interest means interest is charged as a % of the original loan amount. On balance interest means interest payments depend on the loan outstanding. Amortized means principal and interest payments are calculated such that instalments are equal (e.g. EMI).</span>
           </v-tooltip>
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-select
             label="Principal Payment Type"
             :items="principalTypeItems"
@@ -56,7 +56,7 @@
             <span>End of term means the full principal is paid back at the end of the loan. Equal instalments means the same amount of principal is paid back at a regular rate. Amoritzed means principal and interest payments are calculated such that instalments are equal (e.g. EMI).</span>
           </v-tooltip>
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-text-field label="Frequency of principal payments" type="number" suffix="month(s)" />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
@@ -67,7 +67,7 @@
             <span>You will only need to fill in frequency of principal payments if you select Equal instalments for principal payment type. If you select End of term or amortized, the sheet will automatically determine the frequency of principal payments.</span>
           </v-tooltip>
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-text-field label="Frequency of interest payments" type="number" suffix="month(s)" />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
@@ -78,7 +78,7 @@
             <span>For bullet loan, enter frequency equal to loan duration.</span>
           </v-tooltip>
         </v-row>
-        <v-row align="center px-5" justify="center">
+        <v-row align="center" class="px-5" justify="center">
           <v-text-field label="Interest is charged every..." type="number" suffix="month(s)" />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">

@@ -32,9 +32,7 @@ export const mutations = {
 
 export const actions = {
   setFormSteps(context, payload) {
-    console.log(payload);
     payload = payload.filter(e => e !== " ");
-    console.log(payload);
     context.commit("setFormSteps", payload);
   },
   setCounter(context, payload) {

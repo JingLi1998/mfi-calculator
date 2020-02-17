@@ -11,10 +11,10 @@
         <div
           class="display-regular text-center pt-3"
         >Please provide some basic information concerning the collateral of the loan</div>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-text-field label="Fixed Collateral" type="number" step="0.01" prefix="$" />
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-text-field
             label="Percent Collateral"
             type="number"
@@ -22,7 +22,7 @@
             suffix="as % of loan amount"
           />
         </v-row>
-        <v-row align="center px-2">
+        <v-row align="center" class="px-2">
           <v-col cols="6">
             <v-text-field label="Interest on collateral" type="number" step="0.01" suffix="%" />
           </v-col>
@@ -35,7 +35,7 @@
             />
           </v-col>
         </v-row>
-        <v-row align="center px-5">
+        <v-row align="center" class="px-5">
           <v-text-field label="Interest accrues every..." type="number" suffix="month(s)" />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">

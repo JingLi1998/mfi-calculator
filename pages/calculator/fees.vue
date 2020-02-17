@@ -232,15 +232,15 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.interestRates.indexOf(item);
+      this.editedIndex = this.fees.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.interestRates.indexOf(item);
+      const index = this.fees.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.interestRates.splice(index, 1);
+        this.fees.splice(index, 1);
     },
 
     close() {
