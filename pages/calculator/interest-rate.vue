@@ -65,7 +65,25 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <navigation-button />
+        <div>
+          <nuxt-link to="/" tag="span">
+            <v-btn
+              text
+              class="display-regular-1"
+              @click="previousPage"
+              color="primary"
+              v-text="'Back'"
+            />
+          </nuxt-link>
+          <v-btn
+            v-if="counter != (formSteps.length-1)"
+            text
+            class="display-regular-1"
+            color="primary"
+            @click="nextPage"
+            v-text="'Click here to continue'"
+          />
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -73,11 +91,9 @@
 
 
 <script>
-import navigationButton from "../../components/navigationButton.vue";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-  components: {
-    navigationButton
-  },
   data() {
     return {
       items: [
@@ -122,6 +138,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["formSteps", "counter"]),
+
     formTitle() {
       return this.editedIndex === -1 ? "New Rate" : "Edit Rate";
     }
@@ -132,6 +150,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setCounter"]),
+    previousPage() {
+      this.$router.go(-1);
+    },
+    nextPage() {
+      // this.setFormSteps(this.productTypes);
+      this.$router.push(this.formSteps[this.counter + 1]);
+    },
     editItem(item) {
       this.editedIndex = this.interestRates.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -160,6 +186,10 @@ export default {
       }
       this.close();
     }
+  },
+  mounted() {
+    const currentIndex = this.formSteps.indexOf(this.$route.path);
+    this.setCounter(currentIndex);
   }
 };
 </script>

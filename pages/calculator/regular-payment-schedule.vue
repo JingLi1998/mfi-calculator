@@ -89,18 +89,33 @@
             <span>Note that this may not be the same as frequency of collection! For example, imagine a bullet loan for 100,000 MMK charging 12% interest p.a.. If interested is charged every year, then the repayment at loan end is 112,000 MMK. If interested is charged monthly, then, because of compound interest, the repayment at loan end is 100*(1.01)^12 = 112,682.50. If you want to ignore compounding, then set B20 equal to B19.</span>
           </v-tooltip>
         </v-row>
-        <navigation-button />
+        <div>
+          <nuxt-link to="/" tag="span">
+            <v-btn
+              text
+              class="display-regular-1"
+              @click="previousPage"
+              color="primary"
+              v-text="'Back'"
+            />
+          </nuxt-link>
+          <v-btn
+            v-if="counter != (formSteps.length-1)"
+            text
+            class="display-regular-1"
+            color="primary"
+            @click="nextPage"
+            v-text="'Click here to continue'"
+          />
+        </div>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import navigationButton from "../../components/navigationButton.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  components: {
-    navigationButton
-  },
   data() {
     return {
       expressedItems: [
@@ -118,6 +133,23 @@ export default {
         { text: "Amortized", value: "amortized" }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(["formSteps", "counter"])
+  },
+  methods: {
+    ...mapActions(["setCounter"]),
+    previousPage() {
+      this.$router.go(-1);
+    },
+    nextPage() {
+      // this.setFormSteps(this.productTypes);
+      this.$router.push(this.formSteps[this.counter + 1]);
+    }
+  },
+  mounted() {
+    const currentIndex = this.formSteps.indexOf(this.$route.path);
+    this.setCounter(currentIndex);
   }
 };
 </script>

@@ -31,22 +31,54 @@
           :rules="[v => !!v || 'Item is required']"
           required
         />
-        <navigation-button />
+        <div>
+          <nuxt-link to="/" tag="span">
+            <v-btn
+              text
+              class="display-regular-1"
+              @click="previousPage"
+              color="primary"
+              v-text="'Back'"
+            />
+          </nuxt-link>
+          <v-btn
+            v-if="counter != (formSteps.length-1)"
+            text
+            class="display-regular-1"
+            color="primary"
+            @click="nextPage"
+            v-text="'Click here to continue'"
+          />
+        </div>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import navigationButton from "../../components/navigationButton.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  components: {
-    navigationButton
-  },
   data() {
     return {
       items: ["Yes", "No"]
     };
+  },
+  computed: {
+    ...mapGetters(["formSteps", "counter"])
+  },
+  methods: {
+    ...mapActions(["setCounter"]),
+    previousPage() {
+      this.$router.go(-1);
+    },
+    nextPage() {
+      // this.setFormSteps(this.productTypes);
+      this.$router.push(this.formSteps[this.counter + 1]);
+    }
+  },
+  mounted() {
+    const currentIndex = this.formSteps.indexOf(this.$route.path);
+    this.setCounter(currentIndex);
   }
 };
 </script>
