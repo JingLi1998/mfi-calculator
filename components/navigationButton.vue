@@ -30,11 +30,11 @@ export default {
     ...mapActions(["incrementCounter", "decrementCounter"]),
     nextPage() {
       this.incrementCounter();
-      this.$router.push(this.formSteps[this.counter].to);
+      this.$router.push(this.formSteps[this.counter]);
     },
     previousPage() {
       this.decrementCounter();
-      this.$router.push(this.formSteps[this.counter].to);
+      this.$router.push(this.formSteps[this.counter]);
     }
   }
 };

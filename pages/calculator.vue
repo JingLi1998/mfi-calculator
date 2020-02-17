@@ -1,7 +1,7 @@
 <template>
-  <v-row style="height:100%" align="center" justify="center">
+  <v-content>
     <nuxt-child />
-  </v-row>
+  </v-content>
 </template>
 
 <script>
@@ -15,10 +15,9 @@ export default {
     ...mapActions(["setCounter"])
   },
   mounted() {
-    const currentIndex = this.formSteps
-      .map(e => e.to)
-      .indexOf(this.$route.path);
+    const currentIndex = this.formSteps.indexOf(this.$route.path);
     this.setCounter(currentIndex);
   }
 };
 </script>
+

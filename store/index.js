@@ -1,39 +1,8 @@
+import Vue from "vue";
+
 export const state = () => ({
   counter: 0,
-  formSteps: [
-    {
-      name: "Product Type",
-      to: "/calculator/product-type"
-    },
-    {
-      name: "Basic Info",
-      to: "/calculator/basic-info"
-    },
-    {
-      name: "Regular Payment Schedule",
-      to: "/calculator/regular-payment-schedule"
-    },
-    {
-      name: "Fees",
-      to: "/calculator/fees"
-    },
-    {
-      name: "Collateral",
-      to: "/calculator/collateral"
-    },
-    {
-      name: "Grace Period",
-      to: "/calculator/grace-period"
-    },
-    {
-      name: "Gross Witholding Tax",
-      to: "/calculator/gross-witholding-tax"
-    },
-    {
-      name: "Interest Rate",
-      to: "/calculator/interest-rate"
-    }
-  ]
+  formSteps: ["/calculator/product-type", "/calculator/basic-info"]
 });
 
 export const getters = {
@@ -47,7 +16,8 @@ export const getters = {
 
 export const mutations = {
   setFormSteps(state, payload) {
-    state.formSteps = payload;
+    const defaultSteps = ["/calculator/product-type", "/calculator/basic-info"];
+    Vue.set(state, "formSteps", [...defaultSteps, ...payload]);
   },
   setCounter(state, payload) {
     state.counter = payload;
@@ -62,6 +32,9 @@ export const mutations = {
 
 export const actions = {
   setFormSteps(context, payload) {
+    console.log(payload);
+    payload = payload.filter(e => e !== " ");
+    console.log(payload);
     context.commit("setFormSteps", payload);
   },
   setCounter(context, payload) {

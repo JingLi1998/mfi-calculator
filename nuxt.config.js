@@ -59,7 +59,7 @@ export default {
       dark: false,
       themes: {
         light: {
-          primary: "#8EE144",
+          primary: "#36453B",
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
