@@ -5,5 +5,15 @@
     <v-text-field label="Frequency of principal payments" type="number" suffix="month(s)" />
     <v-text-field label="Frequency of interest payments" type="number" suffix="month(s)" />
     <v-text-field label="Interest is charged every..." type="number" suffix="month(s)" />
+    <navigation-button />
   </div>
 </template>
+
+<script>
+import navigationButton from "../../components/navigationButton.vue";
+export default {
+  components: {
+    navigationButton
+  }
+};
+</script>

@@ -22,11 +22,16 @@
       </v-col>
     </v-row>
     <v-text-field label="Interest accrues every..." type="number" suffix="month(s)" />
+    <navigation-button />
   </div>
 </template>
 
 <script>
+import navigationButton from "../../components/navigationButton.vue";
 export default {
+  components: {
+    navigationButton
+  },
   data() {
     return {
       items: ["Yearly", "Monthly"]

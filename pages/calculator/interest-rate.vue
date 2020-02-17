@@ -54,12 +54,17 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <navigation-button />
   </div>
 </template>
 
 
 <script>
+import navigationButton from "../../components/navigationButton.vue";
 export default {
+  components: {
+    navigationButton
+  },
   data() {
     return {
       dialog: false,

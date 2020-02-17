@@ -16,11 +16,16 @@
         />
       </v-col>
     </v-row>
+    <navigation-button />
   </v-form>
 </template>
 
 <script>
+import navigationButton from "../../components/navigationButton.vue";
 export default {
+  components: {
+    navigationButton
+  },
   data() {
     return {
       items: {
