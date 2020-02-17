@@ -11,9 +11,18 @@
         <div
           class="display-regular text-center pt-3"
         >Please provide some basic information concerning the grace period of the loan</div>
-        <v-text-field label="Grace period for first..." type="number" suffix="month(s)" />
-
-        <v-row>
+        <v-row align="center px-5">
+          <v-text-field label="Grace period for first..." type="number" suffix="month(s)" />
+          <v-tooltip top max-width="500px">
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
+              </v-btn>
+            </template>
+            <span>You may also like to set a grace period for fees. Instead, just change the month that the fee starts in Step 2(b). For example, for a monthly fee with a grace period of three months, change the "Starting from" item in 2(b) to 4 (because the first fee is charged in the fourth month of the loan).</span>
+          </v-tooltip>
+        </v-row>
+        <v-row align="center px-2">
           <v-col cols="6">
             <v-select
               :items="items"
