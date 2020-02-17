@@ -112,6 +112,9 @@ export default {
   methods: {
     ...mapActions(["setFormSteps", "setCounter"]),
     nextPage() {
+      if (this.productTypes.indexOf(undefined) != -1) {
+        return alert("Please fill in all required fields");
+      }
       this.setFormSteps(this.productTypes);
       this.$router.push(this.formSteps[this.counter + 1]);
     }
