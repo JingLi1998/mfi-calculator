@@ -8,6 +8,9 @@
         class="pa-10"
       >
         <div class="headline">Grace Period</div>
+        <div
+          class="display-regular text-center pt-3"
+        >Please provide some basic information concerning the grace period of the loan</div>
         <v-text-field label="Grace period for first..." type="number" suffix="month(s)" />
 
         <v-row>

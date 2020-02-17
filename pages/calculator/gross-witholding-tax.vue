@@ -8,6 +8,9 @@
         class="pa-10"
       >
         <div class="headline">Gross Witholding Tax</div>
+        <div
+          class="display-regular text-center pt-3"
+        >Please provide information about the gross witholding tax of the loan</div>
         <v-text-field label="Tax Rate" />
 
         <v-select

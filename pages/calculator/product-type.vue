@@ -9,7 +9,7 @@
           class="pa-10"
         >
           <div
-            class="display-regular text-center"
+            class="display-regular text-center mb-5"
           >Please describe the features of the loan. Later we will ask for further information on each feature you have selected</div>
           <v-select
             dense

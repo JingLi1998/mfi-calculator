@@ -8,6 +8,9 @@
         class="pa-10"
       >
         <div class="headline">Regular Payment Schedule</div>
+        <div
+          class="display-regular text-center pt-3"
+        >Please provide some basic information concerning the payment schedule of the loan</div>
         <v-text-field label="Interest rate percentage" type="number" step="0.01" suffix="%" />
         <v-text-field label="Frequency of principal payments" type="number" suffix="month(s)" />
         <v-text-field label="Frequency of interest payments" type="number" suffix="month(s)" />

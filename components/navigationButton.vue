@@ -1,20 +1,20 @@
 <template>
   <div>
     <v-btn
-      v-if="counter != (formSteps.length-1)"
-      text
-      class="display-regular-1"
-      color="primary"
-      @click="nextPage"
-      v-text="'Click here to continue'"
-    />
-    <v-btn
       v-if="counter != 0"
       text
       class="display-regular-1"
       color="primary"
       @click="previousPage"
       v-text="'Back'"
+    />
+    <v-btn
+      v-if="counter != (formSteps.length-1)"
+      text
+      class="display-regular-1"
+      color="primary"
+      @click="nextPage"
+      v-text="'Click here to continue'"
     />
   </div>
 </template>

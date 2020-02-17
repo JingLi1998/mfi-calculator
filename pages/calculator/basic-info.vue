@@ -9,6 +9,9 @@
           class="pa-10"
         >
           <div class="headline">Basic Info</div>
+          <div
+            class="display-regular text-center pt-3"
+          >Please provide some basic information concerning the loan amount and duration</div>
           <v-text-field label="Loan Amount" type="number" />
           <v-text-field label="Loan Duration" type="number" suffix="months" />
           <navigation-button />

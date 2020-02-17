@@ -8,6 +8,12 @@
         class="pa-10"
       >
         <div class="headline">Fees</div>
+        <div class="display-regular text-center pt-3">
+          Add one fee for each fee category. For example, a recurring fee
+          charged annually is one fee category. You can enter up to ten fee
+          categories below. If there are fewer than ten fees, just enter the
+          first few and leave the rest blank.
+        </div>
         <v-data-table
           style="background-color:#F5F9E9"
           disable-filtering

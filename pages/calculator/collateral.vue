@@ -8,6 +8,9 @@
         class="pa-10"
       >
         <div class="headline">Collateral</div>
+        <div
+          class="display-regular text-center pt-3"
+        >Please provide some basic information concerning the collateral of the loan</div>
         <v-text-field label="Fixed Collateral" type="number" step="0.01" prefix="$" />
         <v-text-field
           label="Percent Collateral"

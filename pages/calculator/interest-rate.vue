@@ -8,6 +8,9 @@
         class="pa-10"
       >
         <div class="headline text-center">Variable Interest Rate</div>
+        <div
+          class="display-regular text-center pt-3"
+        >The Start of period (month) should be the first month from the start of the loan in which the interest rate is charged. For example, if one interest rate is charged for the first year, and another interest rate is charged for the second year, A59 should be 1, and A60 should be 13.</div>
 
         <v-data-table
           style="background-color:#F5F9E9"
