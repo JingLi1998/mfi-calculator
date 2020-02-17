@@ -68,3 +68,12 @@ input[type="number"] {
 .background {
   background-image: url("/main.jpg");
 }
+
+.tree {
+  background-image: url("/background3.jpg");
+  height: 100%;
+  background-size: cover;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-position: center;
+}
