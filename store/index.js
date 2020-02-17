@@ -11,6 +11,9 @@ export const getters = {
   },
   counter(state) {
     return state.counter;
+  },
+  basicInfo(state) {
+    return state.basicInfo;
   }
 };
 
@@ -22,11 +25,8 @@ export const mutations = {
   setCounter(state, payload) {
     state.counter = payload;
   },
-  incrementCounter(state) {
-    state.counter += 1;
-  },
-  decrementCounter(state) {
-    state.counter -= 1;
+  setBasicInfo(state, payload) {
+    state.basicInfo = { ...payload };
   }
 };
 
@@ -38,10 +38,7 @@ export const actions = {
   setCounter(context, payload) {
     context.commit("setCounter", payload);
   },
-  incrementCounter(context) {
-    context.commit("incrementCounter");
-  },
-  decrementCounter(context) {
-    context.commit("decrementCounter");
+  setBasicInfo(context, payload) {
+    context.commit("setBasicInfo", payload);
   }
 };
