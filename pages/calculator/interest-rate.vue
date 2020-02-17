@@ -74,12 +74,7 @@ export default {
         interest: "",
         expressed: ""
       },
-
-      snack: false,
-      snackColor: "",
-      snackText: "",
       max25chars: v => v.length <= 25 || "Input too long!",
-      pagination: {},
       headers: [
         {
           text: "Start of period (month)",

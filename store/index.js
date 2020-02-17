@@ -32,10 +32,6 @@ export const state = () => ({
     {
       name: "Interest Rate",
       to: "/calculator/interest-rate"
-    },
-    {
-      name: "Irregular Payment Schedule",
-      to: "/calculator/irregular-payment-schedule"
     }
   ]
 });
