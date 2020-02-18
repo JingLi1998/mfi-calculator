@@ -12,7 +12,12 @@
           class="display-regular text-center pt-3"
         >Please provide some basic information concerning the grace period of the loan</div>
         <v-row align="center" class="px-5">
-          <v-text-field label="Grace period for first..." type="number" suffix="month(s)" />
+          <v-text-field
+            v-model="gracePeriod"
+            label="Grace period for first..."
+            type="number"
+            suffix="month(s)"
+          />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -25,6 +30,7 @@
         <v-row align="center" class="px-2">
           <v-col cols="6">
             <v-select
+              v-model="interestApplies"
               :items="items"
               label="Applies to interest?"
               :rules="[v => !!v || 'Item is required']"
@@ -33,6 +39,7 @@
           </v-col>
           <v-col cols="6">
             <v-select
+              v-model="principalApplies"
               :items="items"
               label="Applies to principal?"
               :rules="[v => !!v || 'Item is required']"
@@ -69,11 +76,57 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      items: ["Yes", "No"]
+      items: [
+        { text: "Yes", value: true },
+        { text: "No", valule: false }
+      ]
     };
   },
   computed: {
-    ...mapGetters(["formSteps", "counter"])
+    ...mapGetters(["formSteps", "counter"]),
+    gracePeriod: {
+      get() {
+        return this.$store.getters["gracePeriod/gracePeriod"];
+      },
+      set(gracePeriod) {
+        this.$store.dispatch("gracePeriod/setGracePeriod", gracePeriod);
+      }
+    },
+    interestApplies: {
+      get() {
+        return this.$store.getters["gracePeriod/interestApplies"];
+      },
+      set(interestApplies) {
+        this.$store.dispatch("gracePeriod/setInterestApplies", interestApplies);
+      }
+    },
+    principalApplies: {
+      get() {
+        return this.$store.getters["gracePeriod/principalApplies"];
+      },
+      set(principalApplies) {
+        this.$store.dispatch(
+          "gracePeriod/setPrincipalApplies",
+          principalApplies
+        );
+      }
+    },
+    invalid() {
+      if (this.gracePeriod == undefined || this.gracePeriod == "") {
+        return true;
+      } else if (
+        this.interestApplies == undefined ||
+        this.interestApplies == ""
+      ) {
+        return true;
+      } else if (
+        this.principalApplies == undefined ||
+        this.principalApplies == ""
+      ) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     ...mapActions(["setCounter"]),
@@ -81,7 +134,9 @@ export default {
       this.$router.go(-1);
     },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.invalid) {
+        return alert("Please fill in all fields");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     }
   },

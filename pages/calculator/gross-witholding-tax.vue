@@ -11,21 +11,24 @@
         <div
           class="display-regular text-center pt-3"
         >Please provide information about the gross witholding tax of the loan</div>
-        <v-text-field label="Tax Rate" />
+        <v-text-field v-model="taxRate" label="Tax Rate" />
 
         <v-select
+          v-model="interestApplies"
           :items="items"
           label="Applies to interest repayments?"
           :rules="[v => !!v || 'Item is required']"
           required
         />
         <v-select
+          v-model="feeApplies"
           :items="items"
           label="Applies to fees?"
           :rules="[v => !!v || 'Item is required']"
           required
         />
         <v-select
+          v-model="principalApplies"
           :items="items"
           label="Applies to principal repayments?"
           :rules="[v => !!v || 'Item is required']"
@@ -64,7 +67,63 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["formSteps", "counter"])
+    ...mapGetters(["formSteps", "counter"]),
+    taxRate: {
+      get() {
+        return this.$store.getters["grossWitholdingTax/taxRate"];
+      },
+      set(taxRate) {
+        this.$store.dispatch("grossWitholdingTax/setTaxRate", taxRate);
+      }
+    },
+    interestApplies: {
+      get() {
+        return this.$store.getters["grossWitholdingTax/interestApplies"];
+      },
+      set(interestApplies) {
+        this.$store.dispatch(
+          "grossWitholdingTax/setInterestApplies",
+          interestApplies
+        );
+      }
+    },
+    feeApplies: {
+      get() {
+        return this.$store.getters["grossWitholdingTax/feeApplies"];
+      },
+      set(feeApplies) {
+        this.$store.dispatch("grossWitholdingTax/setFeeApplies", feeApplies);
+      }
+    },
+    principalApplies: {
+      get() {
+        return this.$store.getters["grossWitholdingTax/principalApplies"];
+      },
+      set(principalApplies) {
+        this.$store.dispatch(
+          "grossWitholdingTax/setPrincipalApplies",
+          principalApplies
+        );
+      }
+    },
+    invalid() {
+      if (this.feeApplies == undefined || this.feeApplies == "") {
+        return true;
+      } else if (
+        this.interestApplies == undefined ||
+        this.interestApplies == ""
+      ) {
+        return true;
+      } else if (
+        this.principalApplies == undefined ||
+        this.principalApplies == ""
+      ) {
+        return true;
+      } else if (this.taxRate == undefined || this.taxRate == "") {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     ...mapActions(["setCounter"]),
@@ -72,7 +131,9 @@ export default {
       this.$router.go(-1);
     },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.invalid) {
+        return alert("Please fill out all required fields");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     }
   },
