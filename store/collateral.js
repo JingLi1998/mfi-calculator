@@ -1,41 +1,61 @@
 export const state = () => ({
-  gracePeriod: undefined,
-  interestApplies: undefined,
-  principalApplies: undefined
+  fixedCollateral: undefined,
+  percentCollateral: undefined,
+  interestCollateral: undefined,
+  expressCollateral: undefined,
+  interestAccrues: undefined
 });
 
 export const getters = {
-  gracePeriod(state) {
-    return state.gracePeriod;
+  fixedCollateral(state) {
+    return state.fixedCollateral;
   },
-  interestApplies(state) {
-    return state.interestApplies;
+  percentCollateral(state) {
+    return state.percentCollateral;
   },
-  principalApplies(state) {
-    return state.principalApplies;
+  interestCollateral(state) {
+    return state.interestCollateral;
+  },
+  expressCollateral(state) {
+    return state.expressCollateral;
+  },
+  interestAccrues(state) {
+    return state.interestAccrues;
   }
 };
 
 export const mutations = {
-  setGracePeriod(state, payload) {
-    state.gracePeriod = payload;
+  setFixedCollateral(state, payload) {
+    state.fixedCollateral = payload;
   },
-  setInterestApplies(state, payload) {
-    state.interestApplies = payload;
+  setPercentCollateral(state, payload) {
+    state.percentCollateral = payload;
   },
-  setPrincipalApplies(state, payload) {
-    state.principalApplies = payload;
+  setInterestCollateral(state, payload) {
+    state.interestCollateral = payload;
+  },
+  setExpressCollateral(state, payload) {
+    state.expressCollateral = payload;
+  },
+  setInterestAccrues(state, payload) {
+    state.interestAccrues = payload;
   }
 };
 
 export const actions = {
-  setGracePeriod(context, payload) {
-    context.commit("setGracePeriod", payload);
+  setFixedCollateral(context, payload) {
+    context.commit("setFixedCollateral", payload);
   },
-  setInterestApplies(context, payload) {
-    context.commit("setInterestApplies", payload);
+  setPercentCollateral(context, payload) {
+    context.commit("setPercentCollateral", payload);
   },
-  setPrincipalApplies(context, payload) {
-    context.commit("setPrincipalApplies", payload);
+  setInterestCollateral(context, payload) {
+    context.commit("setInterestCollateral", payload);
+  },
+  setExpressCollateral(context, payload) {
+    context.commit("setExpressCollateral", payload);
+  },
+  setInterestAccrues(context, payload) {
+    context.commit("setInterestAccrues", payload);
   }
 };

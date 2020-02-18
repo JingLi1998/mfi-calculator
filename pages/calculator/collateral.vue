@@ -12,10 +12,17 @@
           class="display-regular text-center pt-3"
         >Please provide some basic information concerning the collateral of the loan</div>
         <v-row align="center" class="px-5">
-          <v-text-field label="Fixed Collateral" type="number" step="0.01" prefix="$" />
+          <v-text-field
+            v-model="fixedCollateral"
+            label="Fixed Collateral"
+            type="number"
+            step="0.01"
+            prefix="$"
+          />
         </v-row>
         <v-row align="center" class="px-5">
           <v-text-field
+            v-model="percentCollateral"
             label="Percent Collateral"
             type="number"
             step="0.01"
@@ -24,10 +31,17 @@
         </v-row>
         <v-row align="center" class="px-2">
           <v-col cols="6">
-            <v-text-field label="Interest on collateral" type="number" step="0.01" suffix="%" />
+            <v-text-field
+              v-model="interestCollateral"
+              label="Interest on collateral"
+              type="number"
+              step="0.01"
+              suffix="%"
+            />
           </v-col>
           <v-col cols="6">
             <v-select
+              v-model="expressCollateral"
               :items="items"
               label="Expressed"
               :rules="[v => !!v || 'Item is required']"
@@ -36,7 +50,12 @@
           </v-col>
         </v-row>
         <v-row align="center" class="px-5">
-          <v-text-field label="Interest accrues every..." type="number" suffix="month(s)" />
+          <v-text-field
+            v-model="interestAccrues"
+            label="Interest accrues every..."
+            type="number"
+            suffix="month(s)"
+          />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -76,11 +95,90 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      items: ["Yearly", "Monthly"]
+      items: [
+        {
+          text: "Yearly",
+          value: "yearly"
+        },
+        { text: "Monthly", value: "monthly" }
+      ]
     };
   },
   computed: {
-    ...mapGetters(["formSteps", "counter"])
+    ...mapGetters(["formSteps", "counter"]),
+    fixedCollateral: {
+      get() {
+        return this.$store.getters["collateral/fixedCollateral"];
+      },
+      set(fixedCollateral) {
+        this.$store.dispatch("collateral/setFixedCollateral", fixedCollateral);
+      }
+    },
+    percentCollateral: {
+      get() {
+        return this.$store.getters["collateral/percentCollateral"];
+      },
+      set(percentCollateral) {
+        this.$store.dispatch(
+          "collateral/setPercentCollateral",
+          percentCollateral
+        );
+      }
+    },
+    interestCollateral: {
+      get() {
+        return this.$store.getters["collateral/interestCollateral"];
+      },
+      set(interestCollateral) {
+        this.$store.dispatch(
+          "collateral/setInterestCollateral",
+          interestCollateral
+        );
+      }
+    },
+    expressCollateral: {
+      get() {
+        return this.$store.getters["collateral/expressCollateral"];
+      },
+      set(expressCollateral) {
+        this.$store.dispatch(
+          "collateral/setExpressCollateral",
+          expressCollateral
+        );
+      }
+    },
+    interestAccrues: {
+      get() {
+        return this.$store.getters["collateral/interestAccrues"];
+      },
+      set(interestAccrues) {
+        this.$store.dispatch("collateral/setInterestAccrues", interestAccrues);
+      }
+    },
+    invalid() {
+      if (
+        this.interestCollateral == undefined ||
+        this.interestCollateral == ""
+      ) {
+        return true;
+      } else if (
+        this.percentCollateral == undefined ||
+        this.percentCollateral == ""
+      ) {
+        return true;
+      } else if (
+        this.expressCollateral == undefined ||
+        this.expressCollateral == ""
+      ) {
+        return true;
+      } else if (
+        this.fixedCollateral == undefined ||
+        this.fixedCollateral == ""
+      ) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     ...mapActions(["setCounter"]),
@@ -88,7 +186,9 @@ export default {
       this.$router.go(-1);
     },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.invalid) {
+        return alert("Please fill in the required values");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     }
   },
