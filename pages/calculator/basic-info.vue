@@ -87,7 +87,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setCounter", "setLoanDuration", "setLoanAmount"]),
+    ...mapActions(["setCounter"]),
     previousPage() {
       this.$router.go(-1);
     },

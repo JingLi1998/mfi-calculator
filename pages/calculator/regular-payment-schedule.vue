@@ -13,10 +13,17 @@
         >Please provide some basic information concerning the payment schedule of the loan</div>
         <v-row align="center" class="px-2">
           <v-col cols="6" class="py-0">
-            <v-text-field label="Interest rate percentage" type="number" step="0.01" suffix="%" />
+            <v-text-field
+              v-model="interestRatePercentage"
+              label="Interest rate percentage"
+              type="number"
+              step="0.01"
+              suffix="%"
+            />
           </v-col>
           <v-col cols="6">
             <v-select
+              v-model="interestExpressed"
               label="expressed"
               :items="expressedItems"
               :rules="[v => !!v || 'Item is required']"
@@ -26,22 +33,7 @@
         </v-row>
         <v-row align="center" class="px-5">
           <v-select
-            label="Interest Payment Type"
-            :items="interestTypeItems"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-          <v-tooltip top max-width="500px">
-            <template v-slot:activator="{ on }">
-              <v-btn icon v-on="on">
-                <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
-              </v-btn>
-            </template>
-            <span>Flat interest means interest is charged as a % of the original loan amount. On balance interest means interest payments depend on the loan outstanding. Amortized means principal and interest payments are calculated such that instalments are equal (e.g. EMI).</span>
-          </v-tooltip>
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
+            v-model="principalPaymentType"
             label="Principal Payment Type"
             :items="principalTypeItems"
             :rules="[v => !!v || 'Item is required']"
@@ -57,7 +49,29 @@
           </v-tooltip>
         </v-row>
         <v-row align="center" class="px-5">
-          <v-text-field label="Frequency of principal payments" type="number" suffix="month(s)" />
+          <v-select
+            v-model="interestPaymentType"
+            label="Interest Payment Type"
+            :items="interestTypeItems"
+            :rules="[v => !!v || 'Item is required']"
+            required
+          />
+          <v-tooltip top max-width="500px">
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
+              </v-btn>
+            </template>
+            <span>Flat interest means interest is charged as a % of the original loan amount. On balance interest means interest payments depend on the loan outstanding. Amortized means principal and interest payments are calculated such that instalments are equal (e.g. EMI).</span>
+          </v-tooltip>
+        </v-row>
+        <v-row align="center" class="px-5">
+          <v-text-field
+            v-model="principalPaymentFrequency"
+            label="Frequency of principal payments"
+            type="number"
+            suffix="month(s)"
+          />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -68,7 +82,12 @@
           </v-tooltip>
         </v-row>
         <v-row align="center" class="px-5">
-          <v-text-field label="Frequency of interest payments" type="number" suffix="month(s)" />
+          <v-text-field
+            v-model="interestPaymentFrequency"
+            label="Frequency of interest payments"
+            type="number"
+            suffix="month(s)"
+          />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -79,7 +98,12 @@
           </v-tooltip>
         </v-row>
         <v-row align="center" class="px-5" justify="center">
-          <v-text-field label="Interest is charged every..." type="number" suffix="month(s)" />
+          <v-text-field
+            v-model="interestMonths"
+            label="Interest is charged every..."
+            type="number"
+            suffix="month(s)"
+          />
           <v-tooltip top max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
@@ -135,7 +159,136 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["formSteps", "counter"])
+    ...mapGetters({
+      formSteps: "formSteps",
+      counter: "counter"
+    }),
+    interestRatePercentage: {
+      get() {
+        return this.$store.getters[
+          "regularPaymentSchedule/interestRatePercentage"
+        ];
+      },
+      set(interestRatePercentage) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setInterestRatePercentage",
+          interestRatePercentage
+        );
+      }
+    },
+    interestExpressed: {
+      get() {
+        return this.$store.getters["regularPaymentSchedule/interestExpressed"];
+      },
+      set(interestExpressed) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setInterestExpressed",
+          interestExpressed
+        );
+      }
+    },
+    principalPaymentType: {
+      get() {
+        return this.$store.getters[
+          "regularPaymentSchedule/principalPaymentType"
+        ];
+      },
+      set(principalPaymentType) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setPrincipalPaymentType",
+          principalPaymentType
+        );
+      }
+    },
+    interestPaymentType: {
+      get() {
+        return this.$store.getters[
+          "regularPaymentSchedule/interestPaymentType"
+        ];
+      },
+      set(interestPaymentType) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setInterestPaymentType",
+          interestPaymentType
+        );
+      }
+    },
+    principalPaymentFrequency: {
+      get() {
+        return this.$store.getters[
+          "regularPaymentSchedule/principalPaymentFrequency"
+        ];
+      },
+      set(principalPaymentFrequency) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setPrincipalPaymentFrequency",
+          principalPaymentFrequency
+        );
+      }
+    },
+    interestPaymentFrequency: {
+      get() {
+        return this.$store.getters[
+          "regularPaymentSchedule/interestPaymentFrequency"
+        ];
+      },
+      set(interestPaymentFrequency) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setInterestPaymentFrequency",
+          interestPaymentFrequency
+        );
+      }
+    },
+    interestMonths: {
+      get() {
+        return this.$store.getters["regularPaymentSchedule/interestMonths"];
+      },
+      set(interestMonths) {
+        this.$store.dispatch(
+          "regularPaymentSchedule/setInterestMonths",
+          interestMonths
+        );
+      }
+    },
+    invalid() {
+      if (
+        this.interestRatePercentage == undefined ||
+        this.interestRatePercentage == ""
+      ) {
+        return true;
+      } else if (
+        this.interestExpressed == undefined ||
+        this.interestExpressed == ""
+      ) {
+        return true;
+      } else if (
+        this.principalPaymentType == undefined ||
+        this.principalPaymentType == ""
+      ) {
+        return true;
+      } else if (
+        this.interestPaymentType == undefined ||
+        this.interestPaymentType == ""
+      ) {
+        return true;
+      } else if (
+        this.principalPaymentFrequency == undefined ||
+        this.principalPaymentFrequency == ""
+      ) {
+        return true;
+      } else if (
+        this.interestPaymentFrequency == undefined ||
+        this.interestPaymentFrequency == ""
+      ) {
+        return true;
+      } else if (
+        this.interestMonths == undefined ||
+        this.interestMonths == ""
+      ) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     ...mapActions(["setCounter"]),
@@ -143,7 +296,9 @@ export default {
       this.$router.go(-1);
     },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.invalid) {
+        return alert("Please fill in all fields");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     }
   },

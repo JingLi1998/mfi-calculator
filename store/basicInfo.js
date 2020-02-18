@@ -1,6 +1,6 @@
 export const state = () => ({
-  loanAmount: "",
-  loanDuration: ""
+  loanAmount: undefined,
+  loanDuration: undefined
 });
 
 export const getters = {
