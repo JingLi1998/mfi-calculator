@@ -176,6 +176,11 @@ export default {
         this.fixedCollateral == ""
       ) {
         return true;
+      } else if (
+        this.interestAccrues == undefined ||
+        this.interestAccrues == ""
+      ) {
+        return true;
       }
       return false;
     }
