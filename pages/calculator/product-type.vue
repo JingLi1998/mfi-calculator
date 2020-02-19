@@ -108,7 +108,7 @@ export default {
           { text: "Collateral", value: "/calculator/collateral" },
           { text: "No Collateral", value: " " }
         ],
-        label: "Click Collateral if cash collateralType is required"
+        label: "Click Collateral if cash collateral is required"
       },
       gracePeriodItems: {
         options: [
