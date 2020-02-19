@@ -1,41 +1,35 @@
 export const state = () => ({
-  gracePeriod: undefined,
-  interestApplies: undefined,
-  principalApplies: undefined
+  feeCategories: []
 });
 
 export const getters = {
-  gracePeriod(state) {
-    return state.gracePeriod;
-  },
-  interestApplies(state) {
-    return state.interestApplies;
-  },
-  principalApplies(state) {
-    return state.principalApplies;
+  feeCategories(state) {
+    return state.feeCategories;
   }
 };
 
 export const mutations = {
-  setGracePeriod(state, payload) {
-    state.gracePeriod = payload;
+  addFeeCategory(state, payload) {
+    state.feeCategories.push(payload);
   },
-  setInterestApplies(state, payload) {
-    state.interestApplies = payload;
+  editFeeCategory(state, payload) {
+    console.log(payload);
+    console.log(state.feeCategories);
+    Object.assign(state.feeCategories[payload.index], payload.item);
   },
-  setPrincipalApplies(state, payload) {
-    state.principalApplies = payload;
+  deleteFeeCategory(state, index) {
+    state.feeCategories.splice(index, 1);
   }
 };
 
 export const actions = {
-  setGracePeriod(context, payload) {
-    context.commit("setGracePeriod", payload);
+  addFeeCategory(context, payload) {
+    context.commit("addFeeCategory", payload);
   },
-  setInterestApplies(context, payload) {
-    context.commit("setInterestApplies", payload);
+  editFeeCategory(context, payload) {
+    context.commit("editFeeCategory", payload);
   },
-  setPrincipalApplies(context, payload) {
-    context.commit("setPrincipalApplies", payload);
+  deleteFeeCategory(context, index) {
+    context.commit("deleteFeeCategory", index);
   }
 };

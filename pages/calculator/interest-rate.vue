@@ -19,7 +19,7 @@
           disable-sort
           hide-default-footer
           :headers="headers"
-          :items="interestRates"
+          :items="interestRatePeriods"
         >
           <template v-slot:item.action="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -27,7 +27,7 @@
           </template>
 
           <template v-slot:footer>
-            <v-btn color="primary" text @click="dialog = !dialog">Add New Item</v-btn>
+            <v-btn color="primary" text @click="showForm">Add New Item</v-btn>
             <v-spacer />
           </template>
 
@@ -44,17 +44,19 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.start" label="Start of Period"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.interest" label="Interest Rate"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-select v-model="editedItem.expressed" label="Expressed" :items="items"></v-select>
-                  </v-col>
-                </v-row>
+                <v-form ref="form">
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.start" label="Start of Period"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.interest" label="Interest Rate"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select v-model="editedItem.expressed" label="Expressed" :items="items"></v-select>
+                    </v-col>
+                  </v-row>
+                </v-form>
               </v-container>
             </v-card-text>
 
@@ -139,7 +141,9 @@ export default {
   },
   computed: {
     ...mapGetters(["formSteps", "counter"]),
-
+    interestRatePeriods() {
+      return this.$store.getters["interestRate/interestRatePeriods"];
+    },
     formTitle() {
       return this.editedIndex === -1 ? "New Rate" : "Edit Rate";
     }
@@ -154,12 +158,20 @@ export default {
     previousPage() {
       this.$router.go(-1);
     },
+    showForm() {
+      if (this.interestRatePeriods.length == 10) {
+        return alert("Max periods reached. Please delete one and try again");
+      }
+      this.dialog = !this.dialog;
+    },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.interestRatePeriods.length == 0) {
+        return alert("Please add an interest rate period");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     },
     editItem(item) {
-      this.editedIndex = this.interestRates.indexOf(item);
+      this.editedIndex = this.interestRatePeriods.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -167,7 +179,7 @@ export default {
     deleteItem(item) {
       const index = this.interestRates.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.interestRates.splice(index, 1);
+        this.$store.dispatch("interestRate/deleteInterestRatePeriod", index);
     },
 
     close() {
@@ -175,14 +187,21 @@ export default {
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.$refs.form.resetValidation();
       }, 300);
     },
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.interestRates[this.editedIndex], this.editedItem);
+        this.$store.dispatch("interestRate/editInterestRatePeriod", {
+          item: this.editedItem,
+          index: this.editedIndex
+        });
       } else {
-        this.interestRates.push(this.editedItem);
+        this.$store.dispatch(
+          "interestRate/addInterestRatePeriod",
+          this.editedItem
+        );
       }
       this.close();
     }

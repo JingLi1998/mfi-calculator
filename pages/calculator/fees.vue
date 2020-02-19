@@ -20,10 +20,10 @@
           disable-sort
           hide-default-footer
           :headers="headers"
-          :items="fees"
+          :items="feeCategories"
         >
           <template v-slot:footer>
-            <v-btn color="primary" text @click="dialog = !dialog">Add New Fee</v-btn>
+            <v-btn color="primary" text @click="showForm">Add New Fee</v-btn>
           </template>
           <template v-slot:item.action="{ item }">
             <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -43,55 +43,57 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Fee Name" />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-select
-                      v-model="editedItem.type"
-                      :items="feeItems"
-                      label="Fee Type"
-                      :rules="[v => !!v || 'Item is required']"
-                      required
-                    />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.fixed" label="Fixed Amount" suffix="MMK" />
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.percentage"
-                      label="Percentage Amount"
-                      suffix="%"
-                    />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-select
-                      v-model="editedItem.onceOrRepeat"
-                      :items="oneOffRepeatItems"
-                      label="One-off or Repeat"
-                      :rules="[v => !!v || 'Item is required']"
-                      required
-                    />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.start" label="Starting From" />
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.repeats" label="Repeats every" />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.finish" label="Finishing date" />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.custom" label="Custom Input Month" />
-                  </v-col>
-                </v-row>
+                <v-form ref="form">
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.name" label="Fee Name" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        v-model="editedItem.type"
+                        :items="feeItems"
+                        label="Fee Type"
+                        :rules="[v => !!v || 'Item is required']"
+                        required
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.fixed" label="Fixed Amount" suffix="MMK" />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.percentage"
+                        label="Percentage Amount"
+                        suffix="%"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        v-model="editedItem.onceOrRepeat"
+                        :items="oneOffRepeatItems"
+                        label="One-off or Repeat"
+                        :rules="[v => !!v || 'Item is required']"
+                        required
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.start" label="Starting From" />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.repeats" label="Repeats every" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.finish" label="Finishing date" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field v-model="editedItem.custom" label="Custom Input Month" />
+                    </v-col>
+                  </v-row>
+                </v-form>
               </v-container>
             </v-card-text>
 
@@ -146,7 +148,7 @@ export default {
         type: "",
         fixed: "",
         percentage: "",
-        onceOrRepeat: "",
+        onceOrRepeat: " ",
         start: "",
         repeats: "",
         finish: "",
@@ -205,13 +207,14 @@ export default {
           value: "custom"
         },
         { text: "Actions", value: "action" }
-      ],
-      fees: []
+      ]
     };
   },
   computed: {
     ...mapGetters(["formSteps", "counter"]),
-
+    feeCategories() {
+      return this.$store.getters["fees/feeCategories"];
+    },
     formTitle() {
       return this.editedIndex === -1 ? "New Fee Category" : "Edit Fee Category";
     }
@@ -226,21 +229,29 @@ export default {
     previousPage() {
       this.$router.go(-1);
     },
+    showForm() {
+      if (this.feeCategories.length == 10) {
+        return alert("Max categories reached. Please delete one and try again");
+      }
+      this.dialog = !this.dialog;
+    },
     nextPage() {
-      // this.setFormSteps(this.productTypes);
+      if (this.feeCategories.length == 0) {
+        return alert("Please add a fee category");
+      }
       this.$router.push(this.formSteps[this.counter + 1]);
     },
 
     editItem(item) {
-      this.editedIndex = this.fees.indexOf(item);
+      this.editedIndex = this.feeCategories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.fees.indexOf(item);
+      const index = this.feeCategories.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.fees.splice(index, 1);
+        this.$store.dispatch("fees/deleteFeeCategory", index);
     },
 
     close() {
@@ -248,14 +259,18 @@ export default {
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.$refs.form.resetValidation();
       }, 300);
     },
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.fees[this.editedIndex], this.editedItem);
+        this.$store.dispatch("fees/editFeeCategory", {
+          item: this.editedItem,
+          index: this.editedIndex
+        });
       } else {
-        this.fees.push(this.editedItem);
+        this.$store.dispatch("fees/addFeeCategory", this.editedItem);
       }
       this.close();
     }
