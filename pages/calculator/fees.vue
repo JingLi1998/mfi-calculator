@@ -1,131 +1,137 @@
 <template>
-  <v-row style="height:100%" align="center" justify="center" class="px-3">
-    <v-col cols="10" align="center" justify="center">
-      <v-card
-        style="border-radius:10px; background-color: #F5F9E9"
-        raised
-        height="100%"
-        class="pa-10"
-      >
-        <div class="headline">Fees</div>
-        <div class="display-regular text-center py-3">
-          Add one fee for each fee category. For example, a recurring fee
-          charged annually is one fee category. You can enter up to ten fee
-          categories below.
-        </div>
-        <v-data-table
-          style="background-color:#F5F9E9"
-          disable-filtering
-          disable-pagination
-          disable-sort
-          hide-default-footer
-          :headers="headers"
-          :items="feeCategories"
-        >
-          <template v-slot:footer>
-            <v-btn color="primary" text @click="showForm">Add New Fee</v-btn>
-          </template>
-          <template v-slot:item.action="{ item }">
-            <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-            <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-          </template>
+  <v-col cols="10" align="center" justify="center">
+    <div class="headline">Fees</div>
+    <div class="display-regular text-center py-3">
+      Add one fee for each fee category. For example, a recurring fee charged
+      annually is one fee category. You can enter up to ten fee categories
+      below.
+    </div>
+    <v-data-table
+      disable-filtering
+      disable-pagination
+      disable-sort
+      hide-default-footer
+      :headers="headers"
+      :items="feeCategories"
+    >
+      <template v-slot:footer>
+        <v-btn color="primary" text @click="showForm">Add New Fee</v-btn>
+      </template>
+      <template v-slot:item.action="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
 
-          <template v-slot:no-data>
-            <div>No Fees</div>
-          </template>
-        </v-data-table>
+      <template v-slot:no-data>
+        <div>No Fees</div>
+      </template>
+    </v-data-table>
 
-        <v-dialog v-model="dialog" max-width="60%">
-          <v-card style="background-color:#F5F9E9">
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
+    <v-dialog v-model="dialog" max-width="60%">
+      <v-card color="success">
+        <v-card-title>
+          <span class="headline">{{ formTitle }}</span>
+        </v-card-title>
 
-            <v-card-text>
-              <v-container>
-                <v-form ref="form">
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.name" label="Fee Name" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        v-model="editedItem.type"
-                        :items="feeItems"
-                        label="Fee Type"
-                        :rules="[v => !!v || 'Item is required']"
-                        required
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.fixed" label="Fixed Amount" suffix="MMK" />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.percentage"
-                        label="Percentage Amount"
-                        suffix="%"
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        v-model="editedItem.onceOrRepeat"
-                        :items="oneOffRepeatItems"
-                        label="One-off or Repeat"
-                        :rules="[v => !!v || 'Item is required']"
-                        required
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.start" label="Starting From" />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.repeats" label="Repeats every" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.finish" label="Finishing date" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field v-model="editedItem.custom" label="Custom Input Month" />
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </v-container>
-            </v-card-text>
+        <v-card-text>
+          <v-container>
+            <v-form ref="form">
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field v-model="editedItem.name" label="Fee Name" />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-select
+                    v-model="editedItem.type"
+                    :items="feeItems"
+                    label="Fee Type"
+                    :rules="[v => !!v || 'Item is required']"
+                    required
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.fixed"
+                    label="Fixed Amount"
+                    suffix="MMK"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.percentage"
+                    label="Percentage Amount"
+                    suffix="%"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-select
+                    v-model="editedItem.onceOrRepeat"
+                    :items="oneOffRepeatItems"
+                    label="One-off or Repeat"
+                    :rules="[v => !!v || 'Item is required']"
+                    required
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.start"
+                    label="Starting From"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.repeats"
+                    label="Repeats every"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.finish"
+                    label="Finishing date"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.custom"
+                    label="Custom Input Month"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-container>
+        </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="close">Cancel</v-btn>
-              <v-btn color="primary" text @click="save">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <div>
-          <nuxt-link to="/" tag="span">
-            <v-btn
-              text
-              class="display-regular-1"
-              @click="previousPage"
-              color="primary"
-              v-text="'Back'"
-            />
-          </nuxt-link>
-          <v-btn
-            v-if="counter != (formSteps.length-1)"
-            text
-            class="display-regular-1"
-            color="primary"
-            @click="nextPage"
-            v-text="'Click here to continue'"
-          />
-        </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="close">Cancel</v-btn>
+          <v-btn color="primary" text @click="save">Save</v-btn>
+        </v-card-actions>
       </v-card>
-    </v-col>
-  </v-row>
+    </v-dialog>
+    <div>
+      <nuxt-link to="/" tag="span">
+        <v-btn
+          text
+          class="display-regular-1"
+          @click="previousPage"
+          color="primary"
+          v-text="'Back'"
+        />
+      </nuxt-link>
+      <v-btn
+        v-if="counter != formSteps.length - 1"
+        text
+        class="display-regular-1"
+        color="primary"
+        @click="nextPage"
+        v-text="'Click here to continue'"
+      />
+    </div>
+  </v-col>
 </template>
 
 <script>

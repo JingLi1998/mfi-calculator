@@ -39,6 +39,9 @@ export const getters = {
   },
   interestRateType(state) {
     return state.interestRateType;
+  },
+  progressCounter(state) {
+    return state.counter / state.formSteps.length;
   }
 };
 

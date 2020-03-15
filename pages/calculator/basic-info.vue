@@ -1,53 +1,43 @@
 <template>
-  <v-container style="height: 100%" class="pa-10" fluid>
-    <v-row style="height:100%" align="center" justify="center" class="px-3">
-      <v-col cols="5" align="center" justify="center">
-        <v-card
-          style="border-radius:10px; background-color: #F5F9E9"
-          raised
-          height="100%"
-          class="pa-10"
-        >
-          <div class="headline">Basic Info</div>
-          <div
-            class="display-regular text-center pt-3"
-          >Please provide some basic information concerning the loan amount and duration</div>
-          <v-text-field
-            :rules="[v => !!v || 'Item is required']"
-            v-model="amount"
-            label="Loan Amount"
-            type="number"
-          />
-          <v-text-field
-            v-model="duration"
-            label="Loan Duration"
-            type="number"
-            suffix="months"
-            :rules="[v => !!v || 'Item is required']"
-          />
-          <div>
-            <nuxt-link to="/" tag="span">
-              <v-btn
-                text
-                class="display-regular-1"
-                @click="previousPage"
-                color="primary"
-                v-text="'Back'"
-              />
-            </nuxt-link>
-            <v-btn
-              v-if="counter != (formSteps.length-1)"
-              text
-              class="display-regular-1"
-              color="primary"
-              @click="nextPage"
-              v-text="'Click here to continue'"
-            />
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-col cols="5" align="center" justify="center">
+    <div class="headline">Basic Info</div>
+    <div class="display-regular text-center pt-3">
+      Please provide some basic information concerning the loan amount and
+      duration
+    </div>
+    <v-text-field
+      :rules="[v => !!v || 'Item is required']"
+      v-model="amount"
+      label="Loan Amount"
+      type="number"
+    />
+    <v-text-field
+      v-model="duration"
+      label="Loan Duration"
+      type="number"
+      suffix="months"
+      :rules="[v => !!v || 'Item is required']"
+    />
+    <div>
+      <nuxt-link to="/" tag="span">
+        <v-btn
+          text
+          class="display-regular-1"
+          @click="previousPage"
+          color="primary"
+          v-text="'Back'"
+        />
+      </nuxt-link>
+      <v-btn
+        v-if="counter != formSteps.length - 1"
+        text
+        class="display-regular-1"
+        color="primary"
+        @click="nextPage"
+        v-text="'Click here to continue'"
+      />
+    </div>
+  </v-col>
 </template>
 
 <script>

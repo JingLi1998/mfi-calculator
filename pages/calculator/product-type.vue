@@ -1,84 +1,76 @@
 <template>
-  <v-row style="height:100%" align="center" justify="center" class="px-3">
-    <v-col cols="7" align="center" justify="center">
-      <v-card
-        style="border-radius:10px; background-color: #F5F9E9"
-        raised
-        height="100%"
-        class="pa-10"
-      >
-        <div
-          class="display-regular text-center mb-5"
-        >Please describe the features of the loan. Later we will ask for further information on each feature you have selected</div>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="paymentScheduleType"
-            :items="paymentScheduleItems.options"
-            :label="paymentScheduleItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="feesType"
-            :items="feeItems.options"
-            :label="feeItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="collateralType"
-            :items="collateralItems.options"
-            :label="collateralItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="gracePeriodType"
-            :items="gracePeriodItems.options"
-            :label="gracePeriodItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="grossTaxType"
-            :items="grossTaxItems.options"
-            :label="grossTaxItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <v-row align="center" class="px-5">
-          <v-select
-            v-model="interestRateType"
-            :items="interestRateItems.options"
-            :label="interestRateItems.label"
-            :rules="[v => !!v || 'Item is required']"
-            required
-          />
-        </v-row>
-        <div>
-          <nuxt-link to="/" tag="span">
-            <v-btn text class="display-regular-1" color="primary" v-text="'Back'" />
-          </nuxt-link>
-          <v-btn
-            text
-            class="display-regular-1"
-            color="primary"
-            @click="nextPage"
-            v-text="'Click here to continue'"
-          />
-        </div>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-col cols="7" align="center" justify="center">
+    <div class="display-regular text-center mb-5">
+      Please describe the features of the loan. Later we will ask for further
+      information on each feature you have selected
+    </div>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="paymentScheduleType"
+        :items="paymentScheduleItems.options"
+        :label="paymentScheduleItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="feesType"
+        :items="feeItems.options"
+        :label="feeItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="collateralType"
+        :items="collateralItems.options"
+        :label="collateralItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="gracePeriodType"
+        :items="gracePeriodItems.options"
+        :label="gracePeriodItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="grossTaxType"
+        :items="grossTaxItems.options"
+        :label="grossTaxItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <v-row align="center" class="px-5">
+      <v-select
+        v-model="interestRateType"
+        :items="interestRateItems.options"
+        :label="interestRateItems.label"
+        :rules="[v => !!v || 'Item is required']"
+        required
+      />
+    </v-row>
+    <div>
+      <nuxt-link to="/" tag="span">
+        <v-btn text class="display-regular-1" color="primary" v-text="'Back'" />
+      </nuxt-link>
+      <v-btn
+        text
+        class="display-regular-1"
+        color="primary"
+        @click="nextPage"
+        v-text="'Click here to continue'"
+      />
+    </div>
+  </v-col>
 </template>
 
 <script>

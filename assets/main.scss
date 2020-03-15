@@ -5,35 +5,61 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.v-data-table {
+  background-color: #faf7f5 !important;
+}
+
+.scrollTo {
+  margin: 0;
+}
+.v-container {
+  width: 100%;
+  margin: 0 !important;
+}
+.full-height {
+  height: calc(100vh - 65px) !important;
+}
+.minimum-full-height {
+  min-height: calc(100vh - 65px) !important;
+}
+.v-application {
+  background-color: #faf7f5 !important;
+  // background-size: contain;
+}
+
+.computer {
+  background-image: url("/imgs/computer.png");
+}
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
 }
 
 .page-enter-active {
-  animation: slide-in 300ms;
+  animation: slide-in 700ms;
 }
 .page-leave-active {
-  animation: slide-out 300ms;
+  animation: slide-out 700ms;
 }
 
 @keyframes slide-in {
   from {
-    transform: translateX(15px);
+    // transform: translateY(10%);
     opacity: 0;
   }
   to {
-    transform: translateX(0px);
+    // transform: translateY(0px);
     opacity: 1;
   }
 }
 @keyframes slide-out {
   from {
-    transform: translateX(0px);
+    // transform: translateY(0px);
     opacity: 1;
   }
   to {
-    transform: translateX(-15px);
+    // transform: translateY(-10%);
     opacity: 0;
   }
 }
