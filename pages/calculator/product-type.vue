@@ -60,12 +60,11 @@
     </v-row>
     <div>
       <nuxt-link to="/" tag="span">
-        <v-btn text class="display-regular-1" color="primary" v-text="'Back'" />
+        <v-btn outlined class="display-regular-1" v-text="'Back'" />
       </nuxt-link>
       <v-btn
-        text
+        outlined
         class="display-regular-1"
-        color="primary"
         @click="nextPage"
         v-text="'Click here to continue'"
       />

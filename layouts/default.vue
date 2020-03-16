@@ -10,20 +10,26 @@
       hide-on-scroll
     >
       <!-- <v-icon>mdi-leaf</v-icon> -->
-      <v-toolbar-title class="pl-9 headline primary--text"
-        >MicroFinance Calculator</v-toolbar-title
-      >
+      <v-toolbar-title class="pl-9 headline primary--text" v-text="title" />
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn text class="title" to="/" style="text-transform: capitalize"
-          >Home</v-btn
-        >
+        <v-btn
+          text
+          class="title"
+          to="/"
+          style="text-transform: capitalize"
+          v-text="homeLinkText"
+        />
         <v-list-item class="title" style="text-transform: capitalize"
           >|</v-list-item
         >
-        <v-btn text class="title" to="/about" style="text-transform: capitalize"
-          >About</v-btn
-        >
+        <v-btn
+          text
+          class="title"
+          to="/about"
+          style="text-transform: capitalize"
+          v-text="aboutLinkText"
+        />
       </v-toolbar-items>
     </v-app-bar>
     <v-content>
@@ -40,7 +46,9 @@ export default {
   data() {
     return {
       items: [],
-      title: "Microfinance Calculator"
+      title: "Microfinance Calculator",
+      homeLinkText: "Home",
+      aboutLinkText: "About"
     };
   }
 };

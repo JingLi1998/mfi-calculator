@@ -8,7 +8,7 @@
             :value="value"
             class="my-9"
             style="width: 55%; margin:auto; height: 10px"
-          ></v-progress-linear>
+          />
         </v-row>
         <v-row align="center" justify="center">
           <nuxt-child />
@@ -27,7 +27,9 @@ export default {
   },
   computed: {
     value() {
-      return this.$store.getters.progressCounter * 100;
+      return this.$route.name === "calculator-results"
+        ? 100
+        : this.$store.getters.progressCounter * 100;
     }
   }
 };

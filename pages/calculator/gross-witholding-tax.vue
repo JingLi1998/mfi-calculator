@@ -30,7 +30,7 @@
     <div>
       <nuxt-link to="/" tag="span">
         <v-btn
-          text
+          outlined
           class="display-regular-1"
           @click="previousPage"
           color="primary"
@@ -39,7 +39,7 @@
       </nuxt-link>
       <v-btn
         v-if="counter != formSteps.length - 1"
-        text
+        outlined
         class="display-regular-1"
         color="primary"
         @click="nextPage"

@@ -23,7 +23,8 @@
       </template>
 
       <template v-slot:footer>
-        <v-btn color="primary" text @click="showForm">Add New Item</v-btn>
+        <br />
+        <v-btn color="primary" outlined @click="showForm">Add New Item</v-btn>
         <v-spacer />
       </template>
 
@@ -68,29 +69,30 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="close">Cancel</v-btn>
-          <v-btn color="primary" text @click="save">Save</v-btn>
+          <v-btn outlined color="primary" @click="close">Cancel</v-btn>
+          <v-btn color="primary" outlined @click="save">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          text
-          class="display-regular-1"
-          @click="previousPage"
-          color="primary"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <br />
+      <v-btn
+        outlined
+        class="display-regular-1"
+        @click="previousPage"
+        color="primary"
+        v-text="'Back'"
+      />
       <v-btn
         v-if="counter != formSteps.length - 1"
-        text
+        outlined
         class="display-regular-1"
-        color="primary"
         @click="nextPage"
         v-text="'Click here to continue'"
       />
+      <v-btn outlined to="/calculator/results" class="display-regular-1"
+        >Calculate APR</v-btn
+      >
     </div>
   </v-col>
 </template>

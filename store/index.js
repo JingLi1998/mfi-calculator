@@ -1,16 +1,20 @@
 import Vue from "vue";
 
-export const state = () => ({
-  appStarted: false,
-  counter: 0,
-  formSteps: ["/calculator/product-type", "/calculator/basic-info"],
-  paymentScheduleType: null,
-  feesType: null,
-  collateralType: null,
-  gracePeriodType: null,
-  grossTaxType: null,
-  interestRateType: null
-});
+const getDefaultState = () => {
+  return {
+    appStarted: false,
+    counter: 0,
+    formSteps: ["/calculator/product-type", "/calculator/basic-info"],
+    paymentScheduleType: null,
+    feesType: null,
+    collateralType: null,
+    gracePeriodType: null,
+    grossTaxType: null,
+    interestRateType: null
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   appStarted(state) {
@@ -73,6 +77,9 @@ export const mutations = {
   },
   setInterestRateType(state, payload) {
     state.interestRateType = payload;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -104,5 +111,8 @@ export const actions = {
   },
   setInterestRateType(context, payload) {
     context.commit("setInterestRateType", payload);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

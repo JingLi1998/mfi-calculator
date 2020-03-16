@@ -15,7 +15,8 @@
       :items="feeCategories"
     >
       <template v-slot:footer>
-        <v-btn color="primary" text @click="showForm">Add New Fee</v-btn>
+        <br />
+        <v-btn outlined @click="showForm">Add New Fee</v-btn>
       </template>
       <template v-slot:item.action="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -107,26 +108,23 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="close">Cancel</v-btn>
-          <v-btn color="primary" text @click="save">Save</v-btn>
+          <v-btn color="primary" outlined @click="close">Cancel</v-btn>
+          <v-btn color="primary" outlined @click="save">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          text
-          class="display-regular-1"
-          @click="previousPage"
-          color="primary"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <br />
       <v-btn
-        v-if="counter != formSteps.length - 1"
-        text
+        outlined
         class="display-regular-1"
-        color="primary"
+        @click="previousPage"
+        v-text="'Back'"
+      />
+      <v-btn
+        outlined
+        v-if="counter != formSteps.length - 1"
+        class="display-regular-1"
         @click="nextPage"
         v-text="'Click here to continue'"
       />

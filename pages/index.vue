@@ -9,6 +9,11 @@
           <p class="subtitle-1 pb-3">
             Calculate your Microfinance loans with ease!
           </p>
+          <p class="subtitle-1 pb-3">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Exercitationem, eos expedita veniam iste reiciendis ad sint possimus
+            commodi cum temporibus.
+          </p>
           <div style="width: 80%;padding-bottom:30%">
             <v-btn @click="nextPage" block class="font-weight-bold"
               >Calculate now, it's free!</v-btn
@@ -82,22 +87,6 @@
       <v-col cols="1" />
     </v-row>
   </div>
-  <!-- <v-container style="height: 100%" class="pa-10" fluid>
-      <v-card
-        style="border-radius:10px; background-color: #F5F9E9"
-        raised
-        class="main-form d-flex justify-center pa-0"
-        height="100%"
-      >
-        <v-row style="height:100%" align="center" justify="center" class="px-3">
-          <v-col sm="4" class="tree pa-0" />
-          <v-col cols="8" align="center">
-            <p class="text-center display-3 px-5">Welcome to the Microfinance Calculator</p>
-            <v-btn text class="headline" @click="nextPage" color="primary">Click here to begin</v-btn>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-container> -->
 </template>
 
 <script>
