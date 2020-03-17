@@ -1,10 +1,14 @@
-export const state = () => ({
-  fixedCollateral: undefined,
-  percentCollateral: undefined,
-  interestCollateral: undefined,
-  expressCollateral: undefined,
-  interestAccrues: undefined
-});
+const getDefaultState = () => {
+  return {
+    fixedCollateral: undefined,
+    percentCollateral: undefined,
+    interestCollateral: undefined,
+    expressCollateral: undefined,
+    interestAccrues: undefined
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   fixedCollateral(state) {
@@ -39,6 +43,9 @@ export const mutations = {
   },
   setInterestAccrues(state, payload) {
     state.interestAccrues = payload;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -57,5 +64,8 @@ export const actions = {
   },
   setInterestAccrues(context, payload) {
     context.commit("setInterestAccrues", payload);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

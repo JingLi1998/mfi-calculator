@@ -56,23 +56,21 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >This is similar to the "Interest is charged every" column, and
+        <span>
+          This is similar to the "Interest is charged every" column, and
           affects the rate of compounding. If you are unsure, you should enter
-          12.</span
-        >
+          12.
+        </span>
       </v-tooltip>
     </v-row>
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          outlined
-          class="display-regular-1"
-          @click="previousPage"
-          color="primary"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <v-btn
+        outlined
+        class="display-regular-1"
+        @click="previousPage"
+        color="primary"
+        v-text="'Back'"
+      />
       <v-btn
         outlined
         v-if="counter != formSteps.length - 1"
@@ -80,6 +78,13 @@
         color="primary"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -191,6 +196,12 @@ export default {
         return alert("Please fill in the required values");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.invalid) {
+        return alert("Please fill in the required values");
+      }
+      this.$router.push("/calculator/results");
     }
   },
   mounted() {

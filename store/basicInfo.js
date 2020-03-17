@@ -1,7 +1,11 @@
-export const state = () => ({
-  loanAmount: undefined,
-  loanDuration: undefined
-});
+const getDefaultState = () => {
+  return {
+    loanAmount: undefined,
+    loanDuration: undefined
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   loanAmount(state) {
@@ -18,6 +22,9 @@ export const mutations = {
   },
   setLoanDuration(state, payload) {
     state.loanDuration = payload;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -25,8 +32,10 @@ export const actions = {
   setLoanAmount(context, payload) {
     context.commit("setLoanAmount", payload);
   },
-
   setLoanDuration(context, payload) {
     context.commit("setLoanDuration", payload);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

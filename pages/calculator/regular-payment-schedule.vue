@@ -39,13 +39,13 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >End of term means the full principal is paid back at the end of the
+        <span>
+          End of term means the full principal is paid back at the end of the
           loan. Equal instalments means the same amount of principal is paid
           back at a regular rate. Amoritzed means principal and interest
           payments are calculated such that instalments are equal (e.g.
-          EMI).</span
-        >
+          EMI).
+        </span>
       </v-tooltip>
     </v-row>
     <v-row align="center" class="px-5">
@@ -62,12 +62,12 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >Flat interest means interest is charged as a % of the original loan
+        <span>
+          Flat interest means interest is charged as a % of the original loan
           amount. On balance interest means interest payments depend on the loan
           outstanding. Amortized means principal and interest payments are
-          calculated such that instalments are equal (e.g. EMI).</span
-        >
+          calculated such that instalments are equal (e.g. EMI).
+        </span>
       </v-tooltip>
     </v-row>
     <v-row align="center" class="px-5">
@@ -83,12 +83,12 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >You will only need to fill in frequency of principal payments if you
+        <span>
+          You will only need to fill in frequency of principal payments if you
           select Equal instalments for principal payment type. If you select End
           of term or amortized, the sheet will automatically determine the
-          frequency of principal payments.</span
-        >
+          frequency of principal payments.
+        </span>
       </v-tooltip>
     </v-row>
     <v-row align="center" class="px-5">
@@ -120,32 +120,32 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >Note that this may not be the same as frequency of collection! For
+        <span>
+          Note that this may not be the same as frequency of collection! For
           example, imagine a bullet loan for 100,000 MMK charging 12% interest
           p.a.. If interested is charged every year, then the repayment at loan
           end is 112,000 MMK. If interested is charged monthly, then, because of
           compound interest, the repayment at loan end is 100*(1.01)^12 =
           112,682.50. If you want to ignore compounding, then set B20 equal to
-          B19.</span
-        >
+          B19.
+        </span>
       </v-tooltip>
     </v-row>
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          outlined
-          class="display-regular-1"
-          @click="previousPage"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <v-btn outlined class="display-regular-1" @click="previousPage" v-text="'Back'" />
       <v-btn
         outlined
         v-if="counter != formSteps.length - 1"
         class="display-regular-1"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -314,6 +314,12 @@ export default {
         return alert("Please fill in all fields");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.invalid) {
+        return alert("Please fill in all fields");
+      }
+      this.$router.push("/calculator/results");
     }
   },
   mounted() {

@@ -1,6 +1,10 @@
-export const state = () => ({
-  interestRatePeriods: []
-});
+const getDefaultState = () => {
+  return {
+    interestRatePeriods: []
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   interestRatePeriods(state) {
@@ -13,12 +17,13 @@ export const mutations = {
     state.interestRatePeriods.push(payload);
   },
   editInterestRatePeriod(state, payload) {
-    console.log(payload);
-    console.log(state.interestRatePeriods);
     Object.assign(state.interestRatePeriods[payload.index], payload.item);
   },
   deleteInterestRatePeriod(state, index) {
     state.interestRatePeriods.splice(index, 1);
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -31,5 +36,8 @@ export const actions = {
   },
   deleteInterestRatePeriod(context, index) {
     context.commit("deleteInterestRatePeriod", index);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

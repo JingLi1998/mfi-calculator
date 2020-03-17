@@ -1,12 +1,16 @@
-export const state = () => ({
-  interestRatePercentage: undefined,
-  interestExpressed: undefined,
-  principalPaymentType: undefined,
-  interestPaymentType: undefined,
-  principalPaymentFrequency: undefined,
-  interestPaymentFrequency: undefined,
-  interestMonths: undefined
-});
+const getDefaultState = () => {
+  return {
+    interestRatePercentage: undefined,
+    interestExpressed: undefined,
+    principalPaymentType: undefined,
+    interestPaymentType: undefined,
+    principalPaymentFrequency: undefined,
+    interestPaymentFrequency: undefined,
+    interestMonths: undefined
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   interestRatePercentage(state) {
@@ -53,6 +57,9 @@ export const mutations = {
   },
   setInterestMonths(state, payload) {
     state.interestMonths = payload;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -77,5 +84,8 @@ export const actions = {
   },
   setInterestMonths(context, payload) {
     context.commit("setInterestMonths", payload);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

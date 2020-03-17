@@ -1,9 +1,13 @@
-export const state = () => ({
-  interestApplies: undefined,
-  feeApplies: undefined,
-  principalApplies: undefined,
-  taxRate: undefined
-});
+const getDefaultState = () => {
+  return {
+    interestApplies: undefined,
+    feeApplies: undefined,
+    principalApplies: undefined,
+    taxRate: undefined
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   feeApplies(state) {
@@ -17,6 +21,9 @@ export const getters = {
   },
   taxRate(state) {
     return state.taxRate;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -32,6 +39,9 @@ export const mutations = {
   },
   setTaxRate(state, payload) {
     state.taxRate = payload;
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };
 

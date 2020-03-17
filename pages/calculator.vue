@@ -1,5 +1,5 @@
 <template>
-  <v-container class="full-height">
+  <v-container class="minimum-full-height">
     <v-row align="center" justify="center" style="minimum-full-height">
       <v-col>
         <v-row>

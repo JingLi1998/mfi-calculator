@@ -19,20 +19,20 @@
       :rules="[v => !!v || 'Item is required']"
     />
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          outlined
-          class="display-regular-1"
-          @click="previousPage"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <v-btn outlined class="display-regular-1" @click="previousPage" v-text="'Back'" />
       <v-btn
         outlined
         v-if="counter != formSteps.length - 1"
         class="display-regular-1"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -84,6 +84,12 @@ export default {
         return alert("Please fill in all fields");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.invalid) {
+        return alert("Please fill in all fields");
+      }
+      this.$router.push("/calculator/results");
     }
   },
   mounted() {

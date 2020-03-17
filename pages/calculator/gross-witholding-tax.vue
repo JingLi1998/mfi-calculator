@@ -1,9 +1,9 @@
 <template>
   <v-col cols="5" align="center" justify="center">
     <div class="headline">Gross Witholding Tax</div>
-    <div class="display-regular text-center pt-3">
-      Please provide information about the gross witholding tax of the loan
-    </div>
+    <div
+      class="display-regular text-center pt-3"
+    >Please provide information about the gross witholding tax of the loan</div>
     <v-text-field v-model="taxRate" label="Tax Rate" />
 
     <v-select
@@ -28,15 +28,13 @@
       required
     />
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          outlined
-          class="display-regular-1"
-          @click="previousPage"
-          color="primary"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <v-btn
+        outlined
+        class="display-regular-1"
+        @click="previousPage"
+        color="primary"
+        v-text="'Back'"
+      />
       <v-btn
         v-if="counter != formSteps.length - 1"
         outlined
@@ -44,6 +42,13 @@
         color="primary"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -126,6 +131,12 @@ export default {
         return alert("Please fill out all required fields");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.invalid) {
+        return alert("Please fill out all required fields");
+      }
+      this.$router.push("/calculator/results");
     }
   },
   mounted() {

@@ -51,11 +51,7 @@
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.fixed"
-                    label="Fixed Amount"
-                    suffix="MMK"
-                  />
+                  <v-text-field v-model="editedItem.fixed" label="Fixed Amount" suffix="MMK" />
                 </v-col>
               </v-row>
               <v-row>
@@ -76,30 +72,18 @@
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.start"
-                    label="Starting From"
-                  />
+                  <v-text-field v-model="editedItem.start" label="Starting From" />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.repeats"
-                    label="Repeats every"
-                  />
+                  <v-text-field v-model="editedItem.repeats" label="Repeats every" />
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.finish"
-                    label="Finishing date"
-                  />
+                  <v-text-field v-model="editedItem.finish" label="Finishing date" />
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.custom"
-                    label="Custom Input Month"
-                  />
+                  <v-text-field v-model="editedItem.custom" label="Custom Input Month" />
                 </v-col>
               </v-row>
             </v-form>
@@ -115,18 +99,20 @@
     </v-dialog>
     <div>
       <br />
-      <v-btn
-        outlined
-        class="display-regular-1"
-        @click="previousPage"
-        v-text="'Back'"
-      />
+      <v-btn outlined class="display-regular-1" @click="previousPage" v-text="'Back'" />
       <v-btn
         outlined
         v-if="counter != formSteps.length - 1"
         class="display-regular-1"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -245,19 +231,22 @@ export default {
       }
       this.$router.push(this.formSteps[this.counter + 1]);
     },
-
+    resultsPage() {
+      if (this.feeCategories.length == 0) {
+        return alert("Please add a fee category");
+      }
+      this.$router.push("/calculator/results");
+    },
     editItem(item) {
       this.editedIndex = this.feeCategories.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-
     deleteItem(item) {
       const index = this.feeCategories.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.$store.dispatch("fees/deleteFeeCategory", index);
     },
-
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -266,7 +255,6 @@ export default {
         this.$refs.form.resetValidation();
       }, 300);
     },
-
     save() {
       if (this.editedIndex > -1) {
         this.$store.dispatch("fees/editFeeCategory", {

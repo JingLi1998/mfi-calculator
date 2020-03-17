@@ -1,8 +1,12 @@
-export const state = () => ({
-  gracePeriod: undefined,
-  interestApplies: undefined,
-  principalApplies: undefined
-});
+const getDefaultState = () => {
+  return {
+    gracePeriod: undefined,
+    interestApplies: undefined,
+    principalApplies: undefined
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   gracePeriod(state) {
@@ -25,6 +29,9 @@ export const mutations = {
   },
   setPrincipalApplies(state, payload) {
     state.principalApplies = payload;
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -37,5 +44,8 @@ export const actions = {
   },
   setPrincipalApplies(context, payload) {
     context.commit("setPrincipalApplies", payload);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

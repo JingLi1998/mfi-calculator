@@ -1,6 +1,10 @@
-export const state = () => ({
-  feeCategories: []
-});
+const getDefaultState = () => {
+  return {
+    feeCategories: []
+  };
+};
+
+export const state = getDefaultState();
 
 export const getters = {
   feeCategories(state) {
@@ -19,6 +23,9 @@ export const mutations = {
   },
   deleteFeeCategory(state, index) {
     state.feeCategories.splice(index, 1);
+  },
+  restartApp(state) {
+    Object.assign(state, getDefaultState());
   }
 };
 
@@ -31,5 +38,8 @@ export const actions = {
   },
   deleteFeeCategory(context, index) {
     context.commit("deleteFeeCategory", index);
+  },
+  restartApp(context) {
+    context.commit("restartApp");
   }
 };

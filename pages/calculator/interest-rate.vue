@@ -44,23 +44,13 @@
             <v-form ref="form">
               <v-row>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.start"
-                    label="Start of Period"
-                  ></v-text-field>
+                  <v-text-field v-model="editedItem.start" label="Start of Period"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field
-                    v-model="editedItem.interest"
-                    label="Interest Rate"
-                  ></v-text-field>
+                  <v-text-field v-model="editedItem.interest" label="Interest Rate"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-select
-                    v-model="editedItem.expressed"
-                    label="Expressed"
-                    :items="items"
-                  ></v-select>
+                  <v-select v-model="editedItem.expressed" label="Expressed" :items="items"></v-select>
                 </v-col>
               </v-row>
             </v-form>
@@ -90,9 +80,13 @@
         @click="nextPage"
         v-text="'Click here to continue'"
       />
-      <v-btn outlined to="/calculator/results" class="display-regular-1"
-        >Calculate APR</v-btn
-      >
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
+      />
     </div>
   </v-col>
 </template>
@@ -174,6 +168,12 @@ export default {
         return alert("Please add an interest rate period");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.interestRatePeriods.length == 0) {
+        return alert("Please add an interest rate period");
+      }
+      this.$router.push("/calculator/results");
     },
     editItem(item) {
       this.editedIndex = this.interestRatePeriods.indexOf(item);

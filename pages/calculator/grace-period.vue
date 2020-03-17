@@ -18,13 +18,13 @@
             <v-icon color="grey lighten-1">mdi-help-circle</v-icon>
           </v-btn>
         </template>
-        <span
-          >You may also like to set a grace period for fees. Instead, just
+        <span>
+          You may also like to set a grace period for fees. Instead, just
           change the month that the fee starts in Step 2(b). For example, for a
           monthly fee with a grace period of three months, change the "Starting
           from" item in 2(b) to 4 (because the first fee is charged in the
-          fourth month of the loan).</span
-        >
+          fourth month of the loan).
+        </span>
       </v-tooltip>
     </v-row>
     <v-row align="center" class="px-2">
@@ -48,15 +48,13 @@
       </v-col>
     </v-row>
     <div>
-      <nuxt-link to="/" tag="span">
-        <v-btn
-          outlined
-          class="display-regular-1"
-          @click="previousPage"
-          color="primary"
-          v-text="'Back'"
-        />
-      </nuxt-link>
+      <v-btn
+        outlined
+        class="display-regular-1"
+        @click="previousPage"
+        color="primary"
+        v-text="'Back'"
+      />
       <v-btn
         v-if="counter != formSteps.length - 1"
         outlined
@@ -64,6 +62,13 @@
         color="primary"
         @click="nextPage"
         v-text="'Click here to continue'"
+      />
+      <v-btn
+        v-if="counter == formSteps.length - 1"
+        outlined
+        @click="resultsPage"
+        class="display-regular-1"
+        v-text="'Calculate APR'"
       />
     </div>
   </v-col>
@@ -136,6 +141,12 @@ export default {
         return alert("Please fill in all fields");
       }
       this.$router.push(this.formSteps[this.counter + 1]);
+    },
+    resultsPage() {
+      if (this.invalid) {
+        return alert("Please fill in all fields");
+      }
+      this.$router.push("/calculator/results");
     }
   },
   mounted() {
